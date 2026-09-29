@@ -1,0 +1,36 @@
+# Public repository: only explicitly reviewed source files are eligible.
+/*
+!/.gitignore
+!/.gitattributes
+!/AGENTS.md
+!/README.md
+!/ROADMAP.md
+!/SECURITY.md
+!/package.json
+!/package-lock.json
+!/app.js
+!/styles.css
+!/index.html
+!/icon.svg
+!/firebase-app-compat.js
+!/firebase-init.example.js
+!/firebase.json
+!/build.cjs
+!/verify.cjs
+!/scripts/
+/scripts/*
+!/scripts/check-publication.cjs
+
+# Never commit environment settings, credentials, local data or build output.
+.env*
+*.pem
+*.key
+*service-account*
+*serviceAccount*
+firebase-init.js
+.firebaserc
+.firebase/
+public/
+node_modules/
+*.log
+preview-*.png

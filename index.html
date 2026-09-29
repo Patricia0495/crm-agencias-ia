@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Tablero — Tu espacio para avanzar</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="firebase-app-compat.js" defer></script>
+  <script src="firebase-init.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./index.html" aria-label="Tablero, volver al inicio"><span class="brand-icon" aria-hidden="true">▥</span> tablero<span class="brand-dot">.</span></a>
+    <span class="topbar-divider"></span><span class="workspace">Mi espacio de trabajo</span>
+    <span class="local-badge"><span></span> Solo en este dispositivo</span>
+    <span class="avatar" aria-label="Espacio personal">T</span>
+  </header>
+  <main>
+    <section class="board-heading" aria-labelledby="board-title">
+      <div><div class="eyebrow">UN POCO DE ORDEN, MUCHAS POSIBILIDADES</div><h1 id="board-title">Mi tablero <span class="title-spark" aria-hidden="true">✳</span></h1><p>De la primera idea al último pendiente.</p></div>
+      <button class="primary" id="new-task"><span aria-hidden="true">＋</span> Nueva tarea</button>
+    </section>
+    <div class="board-toolbar"><span class="view-label"><span aria-hidden="true">▥</span> Vista de tablero</span><span id="total-count">0 tareas</span><span class="drag-tip">Arrastra tus tarjetas para organizarte</span></div>
+    <div class="board" id="board" aria-label="Columnas de tareas"></div>
+  </main>
+  <footer id="storage-status" role="status"><span class="session-dot"></span><strong id="storage-title">Cargando tablero…</strong><span id="storage-message">Almacenamiento local del navegador.</span><span class="footer-note">Un espacio para enfocarte.</span></footer>
+  <div id="announcer" class="sr-only" aria-live="polite"></div>
+  <div id="toast" role="status" hidden></div>
+
+  <dialog id="task-dialog" aria-labelledby="task-heading">
+    <form id="task-form" autocomplete="off">
+      <div class="modal-header"><div><div class="eyebrow">DA EL SIGUIENTE PASO</div><h2 id="task-heading">Nueva tarea</h2></div><button type="button" class="icon-button close-task" aria-label="Cerrar">✕</button></div>
+      <div class="modal-body">
+        <label for="task-title">Título <span class="required">*</span></label><input id="task-title" name="title" required maxlength="160" placeholder="¿Qué quieres hacer?" autofocus>
+        <label for="task-content">Contenido <span class="optional">Opcional</span></label><textarea id="task-content" name="content" rows="4" maxlength="10000" placeholder="Añade los detalles, ideas o pasos que necesitas…"></textarea>
+        <label for="task-column">Columna</label><select id="task-column" name="column"></select>
+        <label for="task-image">Imagen de portada <span class="optional">Opcional</span></label>
+        <div class="upload-box" id="upload-box"><span class="upload-icon" aria-hidden="true">↥</span><strong>Elige una imagen de tu ordenador</strong><span>JPG, PNG, WebP o GIF · Máximo 10 MB</span><input type="file" id="task-image" accept="image/jpeg,image/png,image/webp,image/gif" aria-describedby="image-error"></div>
+        <div class="image-preview" id="image-preview" hidden><img id="preview-image" alt="Vista previa de la portada"><button type="button" id="remove-image" class="small-button">✕ Quitar imagen</button></div>
+        <p class="error" id="image-error" role="alert" hidden></p>
+      </div>
+      <div class="modal-footer"><button type="button" class="danger-text" id="delete-task" hidden>Eliminar tarea</button><span class="spacer"></span><button type="button" class="secondary close-task">Cancelar</button><button type="submit" class="primary" id="submit-task">Crear tarea</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="column-dialog" class="compact-dialog" aria-labelledby="column-heading"><form id="column-form" autocomplete="off"><div class="modal-header"><h2 id="column-heading">Nueva columna</h2><button type="button" class="icon-button" id="close-column" aria-label="Cerrar">✕</button></div><div class="modal-body"><label for="column-name">Nombre de la columna</label><input id="column-name" required maxlength="60" placeholder="Por ejemplo, En revisión" autofocus><label for="column-color">Color de la columna</label><select id="column-color" name="color"></select></div><div class="modal-footer"><button type="button" class="secondary" id="cancel-column">Cancelar</button><button type="submit" class="primary">Aceptar</button></div></form></dialog>
+
+  <dialog id="confirm-dialog" class="compact-dialog" aria-labelledby="confirm-heading"><div class="modal-header"><h2 id="confirm-heading">¿Eliminar?</h2></div><p id="confirm-description" class="confirm-description"></p><div class="modal-footer"><button type="button" class="secondary" id="cancel-delete" autofocus>Cancelar</button><button type="button" class="danger" id="confirm-delete">Eliminar</button></div></dialog>
+</body>
+</html>
+
